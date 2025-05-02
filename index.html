@@ -125,10 +125,10 @@
         
             <div class="card">
               <h3>Test Results</h3>
-              <p><strong>Passed:</strong> 100</p>
+              <p><strong>Passed:</strong> 80</p>
               <p><strong>Failed:</strong> 14</p>
               <p><strong>In-Progress:</strong> 6</p>
-              <p><strong>Blocked:</strong> 1</p>
+              <p><strong>Blocked:</strong> 0</p>
             </div>
           </div>
         
@@ -201,7 +201,6 @@
                 </tr> -->
                 <tr>
                   <td>BUG-121</td>
-                  <td>MIS Survey requires subscription for location (latitude/longitude) detection, forcing manual entry and reducing usability</td>
                   <td>MIS</td>
                   <td><span class="tag critical">Critical</span></td>
                   <td><span class="tag open">Open</span></td>
@@ -225,25 +224,25 @@
               <tbody>
                 <tr>
                   <td>INFORMERPLUS</td>
-                  <td>42</td>
+                  <td>25</td>
                   <td>84%</td>
                   <td><span class="tag in-progress">In Progress</span></td>
                 </tr>
                 <tr>
-                  <td>AISHA</td>
-                  <td>0</td>
-                  <td>0%</td>
+                  <td>AISHA(MINOHEALTH)</td>
+                  <td>25</td>
+                  <td>80%</td>
                   <td><span class="tag complete">In-Progress</span></td>
                 </tr>
                 <tr>
                   <td>CALL CENTER</td>
-                  <td>28</td>
+                  <td>25</td>
                   <td>72%</td>
                   <td><span class="tag in-progress">In Progress</span></td>
                 </tr>
                 <tr>
                   <td>MIS</td>
-                  <td>16</td>
+                  <td>25</td>
                   <td>75%</td>
                   <td><span class="tag issues-found">Issues Found</span></td>
                 </tr>
@@ -253,30 +252,28 @@
         
           <div class="section card">
             <h3>Executive Summary</h3>
-            <p>This week's testing activities focused on all four product lines: INFORMERPLUS, AISHA, CALL CENTER, and SURVEY. Overall test execution was successful with an 89% pass rate across 124 test cases. AISHA demonstrated the highest stability with a 92% pass rate, while SURVEY is experiencing the most challenges with several critical issues identified.</p>
-            <p>Critical issues were identified in both INFORMERPLUS (auth function system) and SURVEY (data export functionality). The development team has prioritized these issues and expects to have fixes by the end of next week.</p>
+            <p>This week's testing activities focused on all four product lines: INFORMERPLUS, AISHA, CALL CENTER, and SURVEY. Overall test execution was successful with an 89% pass rate across 100 test cases. AISHA demonstrated the highest stability with a 92% pass rate, while SURVEY is experiencing the most challenges with several critical issues identified.</p>
           </div>
         
-          <div class="section card">
+          <!-- <div class="section card">
             <h3>Key Achievements</h3>
             <ul>
-              <!-- <li>Completed regression testing on AISHA voice recognition features</li> -->
-              <li>Improved test coverage for INFORMERPLUS auth module to 88%</li>
-              <li>Verified 12 bug fixes from previous iterations across all products</li>
+              <li>Completed regression testing on AISHA voice recognition features</li> -->
+              <!-- <li>Improved test coverage for INFORMERPLUS auth module to 88%</li> --> 
+              <!-- <li>Verified 9 bug fixes from previous iterations across all products</li>
               <li>Successfully implemented automated testing for CALL CENTER core functionality</li>
             </ul>
-          </div>
+          </div> -->
         
           <div class="section card">
             <h3>Next Week's Focus</h3>
             <ul>
               <li>Complete INFORMERPLUS authentication testing</li>
-              <li>Perform performance testing on SURVEY with high volume data</li>
-              <li>Begin testing on new CALL CENTER analytics features</li>
-              <li>Integration testing between AISHA and CALL CENTER</li>
+              <li>Begin testing on Harmonizing CALL CENTER Logs</li>
+              <li>DEFENDER Automation with IFTTT Daily Reporting.</li>
             </ul>
           </div>
-        
+<!--         
           <div class="section card">
             <h3>Risks & Recommendations</h3>
             <p>The SURVEY module requires additional testing resources to address the identified issues before the upcoming release. We recommend postponing the development of the new data export features until all critical and high-severity issues are resolved. Additionally, we suggest implementing more automated tests for the INFORMERPLUS admin functionality to improve regression testing efficiency.</p>
@@ -286,7 +283,7 @@
             QA Weekly Test Report · April 24, 2025 · Internal Use Only
           </footer>
         
-        </div>
+        </div> -->
         
         <script>
           // Bar Chart
@@ -294,10 +291,10 @@
           new Chart(barCtx, {
             type: 'bar',
             data: {
-              labels: ['Passed', 'Failed', 'Blocked', 'Not Run'],
+              labels: ['Passed', 'Failed', 'In-Progress', 'Blocked'],
               datasets: [{
                 label: 'Test Results',
-                data: [76, 11, 8, 5],
+                data: [76, 11, 8, 0],
                 backgroundColor: ['#4caf50', '#f44336', '#ff9800', '#9e9e9e'],
               }]
             },
@@ -320,7 +317,7 @@
               labels: ['Passed', 'Failed', 'In-Progress', 'Blocked'],
               datasets: [{
                 label: 'Test Results Distribution',
-                data: [76, 11, 8, 5],
+                data: [76, 11, 8, 0],
                 backgroundColor: ['#4caf50', '#f44336', '#ff9800', '#9e9e9e'],
               }]
             },
