@@ -28,6 +28,10 @@
         
             .header, .section {
               margin-bottom: 40px;
+
+            }
+            .section, li{
+              padding:8px;
             }
         
             .header-top {
@@ -58,6 +62,7 @@
               padding: 20px;
               border-radius: 8px;
               border: 1px solid #ddd;
+              
             }
         
             .card h3 {
@@ -200,8 +205,9 @@
                   
                 </tr> -->
                 <tr>
-                  <td>BUG-121</td>
-                  <td>MIS</td>
+                  <td>STD-i 85</td>
+                  <td>SGTIN and SSCC Mismatch</td>
+                  <td>INFORMERPLUS</td>
                   <td><span class="tag critical">Critical</span></td>
                   <td><span class="tag open">Open</span></td>
                 
@@ -217,34 +223,40 @@
                 <tr>
                   <th>Product</th>
                   <th>Test Cases</th>
+                  <th>Test Types</th>
                   <th>Pass Rate</th>
                   <th>Status</th>
+                  
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>INFORMERPLUS</td>
-                  <td>25</td>
+                  <td>35</td>
+                  <td>Functional,Performance,Security(Authentication & Authorization),UI Spots Checks,API and Regression Testing,</td>
                   <td>84%</td>
                   <td><span class="tag in-progress">In Progress</span></td>
                 </tr>
                 <tr>
                   <td>AISHA(MINOHEALTH)</td>
-                  <td>25</td>
+                  <td>15</td>
+                  <td>API Testing</td>
                   <td>80%</td>
-                  <td><span class="tag complete">In-Progress</span></td>
+                  <td><span class="tag high">Pending</span></td>
                 </tr>
                 <tr>
                   <td>CALL CENTER</td>
                   <td>25</td>
+                  <td>Functional,Performance,Security(Authentication & Authorization),UI Spots Checks,API and Regression Testing</td>
                   <td>72%</td>
                   <td><span class="tag in-progress">In Progress</span></td>
                 </tr>
                 <tr>
                   <td>MIS</td>
                   <td>25</td>
-                  <td>75%</td>
-                  <td><span class="tag issues-found">Issues Found</span></td>
+                  <td>UI Spots Checks, API and Regression Testing</td>
+                  <td>85%</td>
+                  <td><span class="tag complete">Fixed</span></td>
                 </tr>
               </tbody>
             </table>
@@ -252,7 +264,9 @@
         
           <div class="section card">
             <h3>Executive Summary</h3>
-            <p>This week's testing activities focused on all four product lines: INFORMERPLUS, AISHA, CALL CENTER, and SURVEY. Overall test execution was successful with an 89% pass rate across 100 test cases. AISHA demonstrated the highest stability with a 92% pass rate, while SURVEY is experiencing the most challenges with several critical issues identified.</p>
+            <p>This week’s QA activities covered all four product lines: INFORMERPLUS, AISHA, CALL CENTER, and SURVEY. Out of 100 executed test cases, an overall pass rate of 89% was achieved.
+              AISHA maintained the highest stability with a 92% pass rate.
+              A critical issue was identified in INFORMERPLUS, specifically related to authentication and authorization workflows. The development team addressed and resolved these issues promptly.</p>
           </div>
         
           <!-- <div class="section card">
@@ -268,9 +282,10 @@
           <div class="section card">
             <h3>Next Week's Focus</h3>
             <ul>
-              <li>Complete INFORMERPLUS authentication testing</li>
-              <li>Begin testing on Harmonizing CALL CENTER Logs</li>
-              <li>DEFENDER Automation with IFTTT Daily Reporting.</li>
+              <li><b>Complete Authentication Testing for INFORMERPLUS:</b> Finalize and document all test cases for the login and authentication module.</li>
+              <li><b>Begin Log Harmonization Testing for CALL CENTER Portal</b>:Start validating the consistency and integrity of system logs for the Call Center portal.</li>
+              <li><b>Automate DEFENDER Reporting Using IFTTT:</b>Set up and test automated daily reports for the DEFENDER system through IFTTT integration.</li>
+              <li><b>Collaborative Review of Call Center Portal UI Enhancements:</b>Conduct a comprehensive review of new UI features in the Call Center Portal.Engage the entire Tech Team for cross-functional feedback and alignment.</li>
             </ul>
           </div>
 <!--         
