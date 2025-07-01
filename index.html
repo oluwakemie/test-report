@@ -2,396 +2,1114 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>QA Weekly Test Report</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: 'Times New Roman', Times, serif;
-      background-color: #f5f7fa;
-      padding: 30px;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplified QA Test Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gray: #95a5a6;
+            --info: #1abc9c;
+        }
 
-    .report-container {
-      max-width: 1200px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        body {
+            font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            font-size: 14px;
+        }
 
-    h1,
-    h2 {
-      text-align: center;
-      margin-bottom: 10px;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+        }
 
-    .header,
-    .section {
-      margin-bottom: 40px;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
 
-    }
+        .header h1 {
+            color: var(--dark);
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
 
-    .section,
-    li {
-      padding: 8px;
-    }
+        .header-info {
+            text-align: right;
+            font-size: 14px;
+        }
 
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
 
-    .info {
-      margin-bottom: 20px;
-    }
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
 
-    .grid-2,
-    .grid-3 {
-      display: grid;
-      gap: 20px;
-    }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
 
-    .grid-2 {
-      grid-template-columns: 1fr 1fr;
-    }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
 
-    .grid-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
+        .card h3 {
+            margin-top: 0;
+            color: var(--dark);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
-    .card {
-      background: #fafafa;
-      padding: 20px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
+        .card h3 i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
 
-    }
+        .card-value {
+            font-size: 2.2em;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+        }
 
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 18px;
-      text-align: center;
-    }
+        .pass {
+            color: var(--success);
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
+        .fail {
+            color: var(--danger);
+        }
 
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      font-size: 14px;
-    }
+        .blocked {
+            color: var(--warning);
+        }
 
-    th {
-      background-color: #f0f0f0;
-    }
+        .chart-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
 
-    .tag {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 12px;
-      color: #fff;
-    }
+        .chart {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
 
-    .critical {
-      background: #e53935;
-    }
+        .chart h3 {
+            margin-top: 0;
+            color: var(--dark);
+            font-size: 16px;
+        }
 
-    .high {
-      background: #fb8c00;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 13px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+        }
 
-    .fixed {
-      background: #4caf50;
-    }
+        th,
+        td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
 
-    .in-progress {
-      background: #29b6f6;
-    }
+        th {
+            background-color: var(--primary);
+            color: white;
+            position: sticky;
+            top: 0;
+            font-weight: 600;
+        }
 
-    .open {
-      background: #ef5350;
-    }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
 
-    .complete {
-      background: #4caf50;
-    }
+        tr:hover {
+            background-color: #f1f9ff;
+        }
 
-    .issues-found {
-      background: #ef5350;
-    }
-  </style>
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .status-pass {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+        }
+
+        .status-fail {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+        }
+
+        .status-blocked {
+            background-color: rgba(243, 156, 18, 0.1);
+            color: var(--warning);
+        }
+
+        .defect-cell {
+            text-align: center;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .defect-0 {
+            color: var(--success);
+        }
+
+        .defect-1 {
+            color: var(--warning);
+        }
+
+        .defect-2 {
+            color: var(--danger);
+        }
+
+        .product-tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            flex-wrap: wrap;
+        }
+
+        .product-tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .product-tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .key-findings {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .key-findings h2 {
+            margin-top: 0;
+            color: var(--dark);
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .finding-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .finding-item textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--gray);
+            font-size: 0.85em;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .bug-log {
+            margin: 25px 0;
+        }
+
+        .bug-log h2 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .bug-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .bug-filter {
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #eee;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .bug-filter.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .bug-stats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .bug-stat {
+            padding: 8px 12px;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            min-width: 100px;
+        }
+
+        .bug-stat h4 {
+            margin: 0 0 4px 0;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .bug-stat .value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .bug-stat.total .value {
+            color: var(--dark);
+        }
+
+        .bug-stat.open .value {
+            color: var(--danger);
+        }
+
+        .bug-stat.fixed .value {
+            color: var(--success);
+        }
+
+        .bug-stat.progress .value {
+            color: var(--primary);
+        }
+
+        .bug-stat.rejected .value {
+            color: var(--gray);
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: var(--dark);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .editable-note {
+            background-color: #fffde7;
+            padding: 5px;
+            border-radius: 3px;
+            min-width: 60px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container">
+        <div class="header">
+            <h1></i> QA Test Report</h1>
+            <div class="header-info">
+                <div><strong>Report Date:</strong> <span id="report-date"></span></div>
+                <div><strong>Environment:</strong> <span class="badge badge-primary">Staging</span></div>
+            </div>
+        </div>
 
-  <div class="report-container">
-    <h1>QA Weekly Test Report</h1>
+        <div class="summary-cards">
+            <div class="card">
+                <h3><i class="fas fa-tasks"></i> Test Coverage</h3>
+                <div class="card-value" id="coverage-percentage">0%</div>
+                <p>Percentage of planned tests completed</p>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-check-circle"></i> Pass Rate</h3>
+                <div class="card-value pass" id="pass-percentage">0%</div>
+                <p>Percentage of tests passed</p>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-bug"></i> Defects Found</h3>
+                <div class="card-value fail" id="defect-count">0</div>
+                <p>Total defects identified</p>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-clock"></i> Test Execution</h3>
+                <div class="card-value" id="test-count">0</div>
+                <p>Test cases executed</p>
+            </div>
+        </div>
 
-    <div class="header">
-      <div class="header-top">
-        <div><strong>Report Date:</strong> May 30, 2025</div>
-        <!-- <div><strong>Week:</strong> 17</div> -->
-      </div>
-      <div class="header.info">
-        <strong>Products:</strong> INFORMER MOBILE, AISHA(IN-HOUSE)<br>
-        <strong>Generated by:</strong> Oluwakemi Dada
+        <div class="chart-container">
+            <div class="chart">
+                <h3><i class="fas fa-chart-pie"></i> Test Results</h3>
+                <canvas id="resultsChart"></canvas>
+            </div>
+            <div class="chart">
+                <h3><i class="fas fa-chart-bar"></i> Defects by Product</h3>
+                <canvas id="defectsChart"></canvas>
+            </div>
+        </div>
 
-      </div>
+        <div class="key-findings">
+            <h2><i class="fas fa-search"></i> Key Findings</h2>
+            <div id="key-findings-list">
+                <div class="finding-item">
+                    <textarea
+                        placeholder="Enter key finding #1">Login authentication working as expected across all platforms</textarea>
+                </div>
+                <div class="finding-item">
+                    <textarea
+                        placeholder="Enter key finding #2">Payment processing integration with CRM needs attention</textarea>
+                </div>
+                <div class="finding-item">
+                    <textarea
+                        placeholder="Enter key finding #3">User management validation requires improvements</textarea>
+                </div>
+            </div>
+        </div>
 
+        <div class="section-title"><i class="fas fa-table"></i> Detailed Test Results</div>
+
+        <div class="product-tabs" id="product-tabs">
+            <!-- Product tabs will be inserted here -->
+        </div>
+
+        <div id="product-tab-contents">
+            <!-- Product tab contents will be inserted here -->
+        </div>
+
+        <div class="section-title"><i class="fas fa-bug"></i> Bug Tracking</div>
+
+        <div class="bug-log">
+            <div class="bug-stats" id="bug-stats">
+                <!-- Bug stats will be inserted here -->
+            </div>
+
+            <div class="bug-filters">
+                <div class="bug-filter active" data-filter="all">All Bugs</div>
+                <div class="bug-filter" data-filter="open">Open</div>
+                <div class="bug-filter" data-filter="fixed">Fixed</div>
+                <div class="bug-filter" data-filter="in-progress">In Progress</div>
+                <div class="bug-filter" data-filter="rejected">Rejected</div>
+            </div>
+
+            <table id="bug-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Title</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Reported</th>
+                        <th>Fixed</th>
+                        <th>Assigned To</th>
+                    </tr>
+                </thead>
+                <tbody id="bug-table-body">
+                    <!-- Bugs will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>Report generated on <span id="generation-date"></span></p>
+            <p><i class="fas fa-info-circle"></i> For questions, contact QA team</p>
+        </div>
     </div>
-
-
-
-    <div class="grid-2">
-      <div class="card">
-        <h3>Test Cases Execution Summary</h3>
-        <p><strong>Test Cases Executed:</strong>50</p>
-        <p><strong>Pass Rate:</strong> 80%</p>
-        <div style="height: 6px; background: #4caf50; border-radius: 3px; width: 89%;"></div>
-
-      </div>
-
-      <div class="card">
-        <h3>Test Results</h3>
-        <p><strong>Passed:</strong>45</p>
-        <p><strong>Failed:</strong>5</p>
-        <p><strong>In-Progress:</strong>5</p>
-        <p><strong>Blocked:</strong> 0</p>
-      </div>
-      <!--  <div >
-        <strong>Test Scope Features Covered:</strong><br>
-          Label Generation & Notification (InformerPlus) <br>
-
-          Call Center Log Harmonization (API) <br>
-
-          “Forgot Password” flows (Call Center & InformerPlus) <br>
-
-          SGTIN/SSCC Label Consistency (InformerPlus) <br>
-      </div> -->
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <h3>Test Scope Features Covered:</h3>
-       <!-- <p> <strong>Call Center Portal:</strong>  Error message for submitting survey</p> -->
-        <p><strong>AISHA:</strong>  Voice Recognition Integration</p>
-        <p><strong>AISHA(MINOHEALTH):</strong>Removal of Product Authentication Barrier for AISHA Access & 15 sessions/24hrs for all users </p>
-       <!-- <p><strong>MIS:</strong>  PPMVs Profile Survey: Kano & Kaduna </p> -->
-        <p> <strong>Informer Mobile:</strong> Commissioning Labels to Shipping Package</p>
-        <p><strong>DEFENDER:</strong> IFTTT SMS Delivery Verification</p>
-      </div>
-
-      <div class="card">
-        <h3>Test Coverage</h3>
-        <p><strong>Requirements Coverage:</strong> 72%</p>
-        <div style="height: 6px; background: #4caf50; border-radius: 3px; width: 92%;"></div>
-        <p><strong>Code Coverage:</strong> 82%</p>
-        <div style="height: 6px; background: #42a5f5; border-radius: 3px; width: 80%;"></div>
-
-        <h3>Bug Status</h3>
-        <p><strong>New Bugs:</strong>15</p>
-        <p><strong>Fixed:</strong>10</p>
-        <p><strong>Re-opened:</strong>1</p>
-        <p><strong>Total Open:</strong>5</p>
-
-
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <h3>Test Results Trend</h3>
-        <canvas id="barChart"></canvas>
-      </div>
-      <div class="card">
-        <h3>Test Results Distribution</h3>
-        <canvas id="pieChart"></canvas>
-      </div>
-    </div>
-
-    <div class="section card">
-      <h3>Critical Issues</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Issue</th>
-            <th>Product</th>
-            <th>Severity</th>
-            <th>Status</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>BUG-01</td>
-            <td>Glo SMS delivery issues blocking PIN Verification.</td>
-            <td>DEFENDER</td>
-            <td><span class="tag open">Critical</span></td>
-            <td><span class="tag open">Open</span></td>
-          </tr>
-          <tr>
-            <td>BUG-02</td>
-            <td>SSCC Error: GS1 Server Failure</td>
-            <td>INFOMER MOBILE</td>
-            <td><span class="tag open">Critical</span></td>
-            <td><span class="tag open">Open</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-// 
-    <div class="section card">
-      <h3>Product Test Status</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Test Cases</th>
-            <th>Test Types</th>
-            <th>Feature Tested</th>
-            <th>Pass</th>
-            <th>Bugs Report</th>
-            <th>Pass Rate</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>INFORMER MOBILE</td>
-            <td>5</td>
-            <td>Regression Test</td>
-            <td>Ship Package: Barcode Scanning & Validation</td>
-            <td>0</td>
-            <td></td>
-            <td>0%</td>
-            <td><span class="tag in-progress">In Progress</span></td>
-          </tr>
-          <tr>
-            <td>AISHA(IN-HOUSE)</td>
-            <td>20</td>
-            <td>Functional Test</td>
-            <td>Test the ability of AISHA to receive and process voice messages <br>(voice-to-text and response processing)
-            </td>
-            <td>15</td>
-            <td>5</td>
-            <td>50%</td>
-            <td><span class="tag in-progress">In Progress</span></td>
-          </tr>
-          <tr>
-            <td>AISHA(MINOHEALTH)</td>
-            <td>20</td>
-            <td>Regression Test</td>
-            <td>Removal of Product Authentication Barrier for AISHA Access & 15 sessions/24hrs for all users
-            </td>
-            <td>20</td>
-            <td>0</td>
-            <td>50%</td>
-            <td><span class="tag in-progress">In Progress</span></td>
-          </tr>
-         
-          <tr>
-            <td>DEFENDER</td>
-            <td>N/A</td>
-            <td>Reliability Test</td>
-            <td>Validation of successful and failed delivery logs</td>
-            <td>N/A</td>
-            <td>N/A</td>
-            <td>80% (from reliability<br>  logs review)</td>
-            <td><span class="tag in-progress">In Progress</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="section card">
-      <h3>Executive Summary</h3>
-     <p>This week, QA covered INFORMER MOBILE,AISHA (IN-HOUSE), AISHA (MINOHEALTH), and DEFENDER. 50 test cases were executed with an 84% pass rate. <strong>AISHA voice recognition</strong>  was tested for accuracy and response handling. <strong>INFORMERMOBILE</strong> is failing at the point of Commissioning SSCC due to <b>GS1 Server Failure</b>.</p>
-    </div>
-
-    <!-- <div class="section card">
-            <h3>Key Achievements</h3>
-            <ul>
-              <li>Completed regression testing on AISHA voice recognition features</li> -->
-    <!-- <li>Improved test coverage for INFORMERPLUS auth module to 88%</li> -->
-    <!-- <li>Verified 9 bug fixes from previous iterations across all products</li>
-              <li>Successfully implemented automated testing for CALL CENTER core functionality</li>
-            </ul>
-          </div> -->
-
-    <div class="section card">
-      <h3>Next Week's Focus</h3>
-      <ul>
-        <li><b>Running Integration Test on new CALL CENTER portal</li>
-        <li><b>After InfomerMobile Fixes:Running Full Reliability Test</b></li>
-        <li>Test Lawamco Implementation</li>
-       
-      </ul>
-    </div>
-    <!--         
-          <div class="section card">
-            <h3>Risks & Recommendations</h3>
-            <p>The SURVEY module requires additional testing resources to address the identified issues before the upcoming release. We recommend postponing the development of the new data export features until all critical and high-severity issues are resolved. Additionally, we suggest implementing more automated tests for the INFORMERPLUS admin functionality to improve regression testing efficiency.</p>
-          </div>
-        
-          <footer style="text-align: center; margin-top: 30px; font-size: 12px; color: gray;">
-            QA Weekly Test Report · April 24, 2025 · Internal Use Only
-          </footer>
-        
-        </div> -->
 
     <script>
-      // Bar Chart
-      const barCtx = document.getElementById('barChart').getContext('2d');
-      new Chart(barCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Passed', 'Failed', 'In-Progress', 'Blocked'],
-          datasets: [{
-            label: 'Test Results',
-            data: [80, 5, 15, 0],
-            backgroundColor: ['#4caf50', '#f44336', '#ff9800', '#9e9e9e'],
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: false },
-            title: {
-              display: false
+        // Test data - EDIT THIS SECTION
+        const testData = [
+        {
+                "product": "SMIS 2.0",
+                "testType": "Survey Logic Testing",
+                "testCase": "Skip to pregnancy question if 'Have you ever given birth?' is 'No'",
+                "status": "Pass",
+                "defects": 0,
+                "notes": "Logic flow correctly skips to pregnancy question",
+                "priority": "Medium"
+            },
+            {
+                "product": "SMIS 2.0",
+                "testType": "Survey Logic Testing",
+                "testCase": "Skip to pregnancy if both boy and girl counts = 0",
+                "status": "Pass",
+                "defects": 0,
+                "notes": "Correct conditional skip after zero values",
+                "priority": "Medium"
+            },
+            {
+                "product": "SMIS 2.0",
+                "testType": "Survey Logic Testing",
+                "testCase": "Skip to treatment-seeking question if fever = No",
+                "status": "Pass",
+                "defects": 0,
+                "notes": "Correctly skips treatment path",
+                "priority": "High"
+            },
+            {
+                "product": "SMIS 2.0",
+                "testType": "Survey Logic Testing",
+                "testCase": "Skip to treatment-seeking question if fever = 'I don't know'",
+                "status": "Pass",
+                "defects": 0,
+                "notes": "Fallback logic works correctly",
+                "priority": "High"
+            },
+            {
+                "product": "SMIS 2.0",
+                "testType": "Survey Logic Testing",
+                "testCase": "Show weeks/months question if both Doctor and Nurse selected",
+                "status": "Pass",
+                "defects": 0,
+                "notes": "Weeks/months follow-up appears as expected",
+                "priority": "Medium"
+            },
+            {
+                product: "Call Center Portal",
+                testType: "API Testing",
+                testCase: "Forgot Password - Reset Password",
+                status: "Pass",
+                defects: 1,
+                notes: "Password reset functionality working as expected",
+                priority: "High"
+            },
+            {
+                product: "Call Center Portal",
+                testType: "Performance Testing",
+                testCase: "Handle many contacts without crash",
+                status: "Pass",
+                defects: 0,
+                notes: "Page remains responsive with over 100 contacts",
+                priority: "High"
+            },
+            {
+                product: "Call Center Portal",
+                testType: "Security Testing",
+                testCase: "Cannot access other agent's tasks",
+                status: "Pass",
+                defects: 0,
+                notes: "Access denied when using unauthorized agent URL",
+                priority: "High"
+            },
+
+           
+            {
+                product: "Call Center Portal",
+                testType: "Functional Testing",
+                testCase: "Validate F_name and L_name with whitespace-only fields",
+                status: "Fail",
+                defects: 1,
+                notes: "Empty first name and last name inputs (whitespace-only) were accepted; expected to be rejected.",
+                priority: "Medium"
+            },
+            {
+                product: "Call Center Portal",
+                testType: "Functional Testing",
+                testCase: "Filter by Status - New",
+                status: "Fail",
+                defects: 1,
+                notes: "Filter 'New' did not correctly return expected contact entries. ",
+                priority: "Medium"
+            },
+            {
+                product: "Call Center Portal",
+                testType: "Functional Testing",
+                testCase: "Filter by Status - Language Barrier IGBO",
+                status: "Fail",
+                defects: 1,
+                notes: "Language Barrier filter (IGBO) failed to return expected contacts.",
+                priority: "Medium"
+            },
+            {
+                product: "Call Center Portal",
+                testType: "UI Testing",
+                testCase: "All contact rows are populated",
+                status: "Pass",
+                defects: 0,
+                notes: "No blank or missing contact rows in the table",
+                priority: "Low"
+            },
+           
+
+
+
+        ];
+
+        // Bug data - EDIT THIS SECTION
+        const bugData = [
+            {
+                "id": "BUG-SMIS-010",
+                "product": "SMIS 2.0",
+                "title": "ACT-related questions not skipped when ACT is not selected",
+                "description": "Last two ACT-related questions appear even when ACT is not among the selected medications.",
+                "priority": "High",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "2025-06-30",
+                "assignedTo": "Dev Team",
+                "testCase": "Skip ACT-related questions if ACT not selected"
+            },
+            {
+                "id": "BUG-SMIS-011",
+                "product": "SMIS 2.0",
+                "title": "Only one ACT question shown when ACT is selected",
+                "description": "Expected two ACT-related questions, but only one appears after selecting ACT.",
+                "priority": "High",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "Show ACT-related questions if ACT selected"
+            },
+            {
+                "id": "BUG-SMIS-012",
+                "product": "SMIS 2.0",
+                "title": "Survey does not submit after answering ACT questions",
+                "description": "User is unable to proceed to the next section after submitting responses to ACT-related questions.",
+                "priority": "High",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "Allow survey submission after ACT questions"
+            },
+            {
+                "id": "BUG-SMIS-013",
+                "product": "SMIS 2.0",
+                "title": "ACT-related questions appear despite selecting only non-ACT medications",
+                "description": "Last ACT-related questions appear when only Paracetamol is selected, ACT not included.",
+                "priority": "High",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "Skip ACT-related questions when ACT is not selected"
+            },
+
+            {
+                "id": "BUG-SA-USER-003",
+                "product": "Call Center Portal",
+                "title": "Reassignment confirmation activates without selecting agent",
+                "description": "Confirm reassignment button should stay inactive until a different agent is selected",
+                "priority": "High",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "User reassignment → Same agent selected",
+                "retest": "Fail"
+            },
+            {
+                "id": "BUG-SA-USER-004",
+                "product": "Call Center Portal",
+                "title": "Reassignment allows selection of inactive agents",
+                "description": "Inactive agents should not appear in the reassignment dropdown",
+                "priority": "High",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "User reassignment → Inactive agent visibility",
+                "retest": "Fail"
+            },
+            {
+                "id": "BUG-SA-USER-005",
+                "product": "Call Center Portal",
+                "title": "Agent dropdown shows deactivated users",
+                "description": "Only active agents should be listed in the agent dropdown",
+                "priority": "High",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "Assignment module → Agent list validation",
+                "retest": "Fail"
+            },
+            {
+                "id": "BUG-SA-USER-006",
+                "product": "Call Center Portal",
+                "title": "Assigning past due date contact allowed",
+                "description": "Admin should not be able to assign expired contacts",
+                "priority": "Critical",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "Assignment module → Due date validation",
+                "retest": "Fail"
+            },
+            {
+                "id": "BUG-SA-USER-007",
+                "product": "Call Center Portal",
+                "title": "Export button not functioning",
+                "description": "Export button should download the contact list as a file",
+                "priority": "Medium",
+                "status": "Open",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "Contact management → Export list",
+                "retest": "Fail"
+            },
+            {
+                "id": "BUG-SA-USER-008",
+                "product": "Call Center Portal",
+                "title": "Reassigned contacts do not appear at top of list",
+                "description": "Reassigned calls should be sorted to the top for visibility",
+                "priority": "Medium",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "Contact reassignment → Display order validation",
+                "retest": "Fail"
+            },
+            {
+                "id": "BUG-SA-USER-009",
+                "product": "Call Center Portal",
+                "title": "User created with whitespace-only names",
+                "description": "Validation should reject blank or space-only names",
+                "priority": "High",
+                "status": "New",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "User creation → Input field validation",
+                "retest": "Fail"
+            },
+            {
+                "id": "BUG-SA-USER-010",
+                "product": "Call Center Portal",
+                "title": "Special characters allowed in name fields",
+                "description": "System should restrict special characters and emojis in name fields",
+                "priority": "Medium",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "User creation → Special character input",
+                "retest": "Fail"
+            },
+            {
+                "id": "BUG-SA-USER-011",
+                "product": "Call Center Portal",
+                "title": "Trimming not applied to inputs",
+                "description": "Leading/trailing spaces should be trimmed automatically before saving",
+                "priority": "Low",
+                "status": "Fixed",
+                "reportedDate": "2025-06-30",
+                "fixedDate": "",
+                "assignedTo": "Dev Team",
+                "testCase": "User input → Auto-trim validation",
+                "retest": "Fail"
             }
-          }
-        }
-      });
 
-      // Pie Chart
-      const pieCtx = document.getElementById('pieChart').getContext('2d');
-      new Chart(pieCtx, {
-        type: 'pie',
-        data: {
-          labels: ['Passed', 'Failed', 'In-Progress', 'Blocked'],
-          datasets: [{
-            label: 'Test Results Distribution',
-            data: [80, 5, 15, 0],
-            backgroundColor: ['#4caf50', '#f44336', '#ff9800', '#9e9e9e'],
-          }]
-        },
-        options: {
-          responsive: true,
+
+        ];
+
+        // Calculate statistics
+        function calculateStats() {
+            const totalTests = testData.length;
+            const passedTests = testData.filter(test => test.status === "Pass").length;
+            const failedTests = testData.filter(test => test.status === "Fail").length;
+            const blockedTests = testData.filter(test => test.status === "Blocked").length;
+            const totalDefects = testData.reduce((sum, test) => sum + test.defects, 0);
+
+            // Calculate percentages
+            const passPercentage = Math.round((passedTests / totalTests) * 100);
+            const coveragePercentage = 100;
+
+            // Group by product
+            const products = [...new Set(testData.map(test => test.product))];
+            const productStats = products.map(product => {
+                const productTests = testData.filter(test => test.product === product);
+                const passed = productTests.filter(test => test.status === "Pass").length;
+                const failed = productTests.filter(test => test.status === "Fail").length;
+                const blocked = productTests.filter(test => test.status === "Blocked").length;
+                const defects = productTests.reduce((sum, test) => sum + test.defects, 0);
+
+                return {
+                    product,
+                    total: productTests.length,
+                    passed,
+                    failed,
+                    blocked,
+                    defects,
+                    passRate: Math.round((passed / productTests.length) * 100)
+                };
+            });
+
+            return {
+                totalTests,
+                passedTests,
+                failedTests,
+                blockedTests,
+                totalDefects,
+                passPercentage,
+                coveragePercentage,
+                products,
+                productStats
+            };
         }
-      });
+
+        // Calculate bug statistics
+        function calculateBugStats() {
+            const totalBugs = bugData.length;
+            const openBugs = bugData.filter(bug => bug.status === "Open").length;
+            const fixedBugs = bugData.filter(bug => bug.status === "Fixed").length;
+            const inProgressBugs = bugData.filter(bug => bug.status === "In Progress").length;
+            const rejectedBugs = bugData.filter(bug => bug.status === "Rejected").length;
+
+            return {
+                totalBugs,
+                openBugs,
+                fixedBugs,
+                inProgressBugs,
+                rejectedBugs
+            };
+        }
+
+        // Update dates
+        function updateDates() {
+            const now = new Date();
+            document.getElementById('report-date').textContent = now.toLocaleDateString('en-US');
+            document.getElementById('generation-date').textContent = now.toLocaleDateString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Create product tabs
+        function createProductTabs() {
+            const stats = calculateStats();
+            const tabsContainer = document.getElementById('product-tabs');
+            const contentsContainer = document.getElementById('product-tab-contents');
+
+            tabsContainer.innerHTML = '';
+            contentsContainer.innerHTML = '';
+
+            // Add "All Products" tab
+            const allTab = document.createElement('div');
+            allTab.className = 'product-tab active';
+            allTab.textContent = 'All Products';
+            allTab.onclick = () => showProductTab('all');
+            tabsContainer.appendChild(allTab);
+
+            // Add tabs for each product
+            stats.products.forEach((product) => {
+                const tab = document.createElement('div');
+                tab.className = 'product-tab';
+                tab.textContent = product;
+                tab.onclick = () => showProductTab(product);
+                tabsContainer.appendChild(tab);
+
+                // Create tab content
+                const content = document.createElement('div');
+                content.className = 'tab-content';
+                content.id = `tab-${product.replace(/\s+/g, '-').toLowerCase()}`;
+                contentsContainer.appendChild(content);
+
+                // Populate product-specific table
+                populateProductTable(product, content);
+            });
+
+            // Create "All Products" content
+            const allContent = document.createElement('div');
+            allContent.className = 'tab-content active';
+            allContent.id = 'tab-all';
+            contentsContainer.prepend(allContent);
+
+            // Populate "All Products" table
+            populateProductTable('all', allContent);
+        }
+
+        // Show selected product tab
+        function showProductTab(product) {
+            // Update active tab
+            const tabs = document.querySelectorAll('.product-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update active content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const contentId = product === 'all' ? 'tab-all' : `tab-${product.replace(/\s+/g, '-').toLowerCase()}`;
+            document.getElementById(contentId).classList.add('active');
+        }
+
+        // Populate product table
+        function populateProductTable(product, container) {
+            const filteredData = product === 'all'
+                ? testData
+                : testData.filter(test => test.product === product);
+
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Test Type</th>
+                        <th>Test Case</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Defects</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${filteredData.map(test => `
+                        <tr>
+                            <td>${test.testType}</td>
+                            <td>${test.testCase}</td>
+                            <td>${test.priority}</td>
+                            <td><span class="status status-${test.status.toLowerCase()}">${test.status}</span></td>
+                            <td class="defect-cell defect-${test.defects}">${test.defects > 0 ? test.defects : '0'}</td>
+                            <td>${test.notes}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+
+            container.innerHTML = '';
+            container.appendChild(table);
+        }
+
+        // Create charts
+        function createCharts() {
+            const stats = calculateStats();
+
+            // Test Results Pie Chart
+            const resultsCtx = document.getElementById('resultsChart').getContext('2d');
+            new Chart(resultsCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Passed', 'Failed', 'Blocked'],
+                    datasets: [{
+                        data: [stats.passedTests, stats.failedTests, stats.blockedTests],
+                        backgroundColor: ['#2ecc71', '#e74c3c', '#f39c12'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        datalabels: {
+                            formatter: (value, ctx) => {
+                                const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${percentage}%`;
+                            },
+                            color: '#fff',
+                            font: { weight: 'bold' }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+
+            // Defects by Product Bar Chart
+            const defectsCtx = document.getElementById('defectsChart').getContext('2d');
+            new Chart(defectsCtx, {
+                type: 'bar',
+                data: {
+                    labels: stats.products,
+                    datasets: [{
+                        label: 'Total Defects',
+                        data: stats.productStats.map(ps => ps.defects),
+                        backgroundColor: stats.productStats.map(ps =>
+                            ps.defects === 0 ? '#2ecc71' :
+                                ps.defects <= 2 ? '#f39c12' : '#e74c3c'
+                        ),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // Update summary cards
+        function updateSummaryCards() {
+            const stats = calculateStats();
+            document.getElementById('coverage-percentage').textContent = `${stats.coveragePercentage}%`;
+            document.getElementById('pass-percentage').textContent = `${stats.passPercentage}%`;
+            document.getElementById('defect-count').textContent = stats.totalDefects;
+            document.getElementById('test-count').textContent = stats.totalTests;
+        }
+
+        // Populate bug tracking section
+        function populateBugTracking() {
+            const bugStats = calculateBugStats();
+            const bugStatsContainer = document.getElementById('bug-stats');
+            const bugTableBody = document.getElementById('bug-table-body');
+
+            // Update bug statistics cards
+            bugStatsContainer.innerHTML = `
+                <div class="bug-stat total">
+                    <h4>Total Bugs</h4>
+                    <div class="value">${bugStats.totalBugs}</div>
+                </div>
+                <div class="bug-stat open">
+                    <h4>Open</h4>
+                    <div class="value">${bugStats.openBugs}</div>
+                </div>
+                <div class="bug-stat fixed">
+                    <h4>Fixed</h4>
+                    <div class="value">${bugStats.fixedBugs}</div>
+                </div>
+                <div class="bug-stat progress">
+                    <h4>In Progress</h4>
+                    <div class="value">${bugStats.inProgressBugs}</div>
+                </div>
+                <div class="bug-stat rejected">
+                    <h4>Rejected</h4>
+                    <div class="value">${bugStats.rejectedBugs}</div>
+                </div>
+            `;
+
+            // Populate bug table
+            bugTableBody.innerHTML = bugData.map(bug => `
+                <tr class="bug-row" data-status="${bug.status.toLowerCase().replace(' ', '-')}">
+                    <td>${bug.id}</td>
+                    <td>${bug.product}</td>
+                    <td>${bug.title}</td>
+                    <td>${bug.priority}</td>
+                    <td><span class="status status-${bug.status.toLowerCase().replace(' ', '-')}">${bug.status}</span></td>
+                    <td>${bug.reportedDate}</td>
+                    <td>${bug.fixedDate || '-'}</td>
+                    <td>${bug.assignedTo}</td>
+                </tr>
+            `).join('');
+
+            // Add filter functionality
+            document.querySelectorAll('.bug-filter').forEach(filter => {
+                filter.addEventListener('click', function () {
+                    document.querySelectorAll('.bug-filter').forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const statusFilter = this.getAttribute('data-filter');
+                    document.querySelectorAll('.bug-row').forEach(row => {
+                        if (statusFilter === 'all' || row.getAttribute('data-status') === statusFilter) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Initialize the report
+        function initReport() {
+            updateDates();
+            createProductTabs();
+            createCharts();
+            updateSummaryCards();
+            populateBugTracking();
+        }
+
+        // Run when page loads
+        window.onload = initReport;
     </script>
-
 </body>
 
 </html>
