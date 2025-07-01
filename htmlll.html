@@ -1,0 +1,313 @@
+<!-- <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SMIS UAT Test Report</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1, h2 {
+      color: #004085;
+    }
+    .summary {
+      background: #e2e6ea;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-left: 5px solid #004085;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    th {
+      background-color: #004085;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+    .passed { color: green; font-weight: bold; }
+    .failed { color: red; font-weight: bold; }
+    .high { background: #ffc107; padding: 0.2rem 0.4rem; border-radius: 4px; }
+    .medium { background: #17a2b8; color: white; padding: 0.2rem 0.4rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <h1>SMIS UAT Test Report</h1>
+
+  <div class="summary">
+    <p><strong>Project:</strong> SMIS Survey</p>
+    <p><strong>Module:</strong> Conditional Logic & Skip Patterns</p>
+    <p><strong>Status:</strong> 11 Test Cases Executed — <span class="passed">8 Passed</span>, <span class="failed">3 Failed</span></p>
+  </div>
+
+  <h2>Test Execution Summary</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Test Case ID</th>
+        <th>Test Scenario</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="test-summary">
+      <!-- JS will populate here -->
+    <!-- </tbody>
+  </table>
+
+  <h2>Defects Identified</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Defect ID</th>
+        <th>Description</th>
+        <th>Severity</th>
+        <th>Linked Test Case</th>
+        <th>Suggested Fix</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>BUG-001</td>
+        <td>ACT logic displays only 1 question instead of both</td>
+        <td>High</td>
+        <td>SMIS-UAT-008,009</td>
+        <td>Review ACT follow-up display condition</td>
+      </tr>
+      <tr>
+        <td>BUG-002</td>
+        <td>ACT-related questions show even when ACT not selected</td>
+        <td>Medium</td>
+        <td>SMIS-UAT-010</td>
+        <td>Fix medication logic to check ACT exclusively</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const tests = [
+      { id: "SMIS-UAT-001", scenario: "Skip to pregnancy question if 'Have you ever given birth?' is 'No'", status: "PASSED", priority: "High", notes: "Skip logic works correctly" },
+      { id: "SMIS-UAT-002", scenario: "Show childbirth questions if 'Have you ever given birth?' is 'Yes'", status: "PASSED", priority: "High", notes: "Conditional logic triggered properly" },
+      { id: "SMIS-UAT-003", scenario: "Skip to pregnancy if boy/girl count is 0", status: "PASSED", priority: "High", notes: "Skip logic confirmed" },
+      { id: "SMIS-UAT-004", scenario: "Skip to treatment if fever = 'No'", status: "PASSED", priority: "High", notes: "Flow correct" },
+      { id: "SMIS-UAT-005", scenario: "Skip to treatment if fever = 'I don't know'", status: "PASSED", priority: "High", notes: "Handled edge case" },
+      { id: "SMIS-UAT-006", scenario: "Show pregnancy weeks if ANC provider includes Doctor/Nurse", status: "PASSED", priority: "High", notes: "Multi-select logic OK" },
+      { id: "SMIS-UAT-007", scenario: "End section if ACT not selected", status: "PASSED", priority: "High", notes: "ACT condition bypassed properly" },
+      { id: "SMIS-UAT-013", scenario: "Skip ACT questions if ACT not selected, other meds present", status: "PASSED", priority: "High", notes: "No ACT-related questions shown" },
+      { id: "SMIS-UAT-008", scenario: "Show ACT-related questions if ACT selected", status: "FAILED", priority: "High", notes: "Only 1 question shown" },
+      { id: "SMIS-UAT-009", scenario: "Confirm submission after ACT questions", status: "FAILED", priority: "Medium", notes: "Survey showed just 1 question" },
+      { id: "SMIS-UAT-010", scenario: "Skip ACT questions if ACT not selected", status: "FAILED", priority: "Medium", notes: "2 questions wrongly displayed" },
+    ];
+
+    const tableBody = document.getElementById("test-summary");
+    tests.forEach(test => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${test.id}</td>
+        <td>${test.scenario}</td>
+        <td class="${test.status === 'PASSED' ? 'passed' : 'failed'}">${test.status}</td>
+        <td><span class="${test.priority.toLowerCase()}">${test.priority}</span></td>
+        <td>${test.notes}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  </script>
+
+</body>
+</html> --> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMIS QA Test Summary Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background-color: #f9f9f9;
+    }
+    header {
+      background-color: #004085;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0;
+      justify-content: space-between;
+    }
+    .card {
+      background: white;
+      flex: 1 1 22%;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .editable {
+      background-color: #fffbe6;
+      padding: 0.5rem;
+      border-radius: 4px;
+      min-height: 1.5rem;
+    }
+    canvas {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+      max-width: 300px;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    th {
+      background-color: #004085;
+      color: white;
+    }
+    .passed { color: green; font-weight: bold; }
+    .failed { color: red; font-weight: bold; }
+    footer {
+      text-align: center;
+      color: #666;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Weekly QA Test Report</h1>
+    <p>Report Date: June 30, 2025 | Environment: Staging</p>
+  </header>
+
+  <section>
+    <h2>Test Summary Metrics</h2>
+    <table contenteditable>
+      <thead>
+        <tr><th>Metric</th><th>Count</th><th>Percentage</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Total Test Cases (T)</td><td>386</td><td>100%</td></tr>
+        <tr><td>Executed</td><td>330</td><td>85.49%</td></tr>
+        <tr><td>Passed</td><td>220</td><td>56.99%</td></tr>
+        <tr><td>Failed</td><td>70</td><td>18.13%</td></tr>
+        <tr><td>In Progress</td><td>40</td><td>10.36%</td></tr>
+        <tr><td>Not Executed (Pending)</td><td>56</td><td>14.51%</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Test Results Distribution</h2>
+    <canvas id="resultsChart" width="300" height="200"></canvas>
+  </section>
+
+  <section>
+    <h2>Key Findings</h2>
+    <ul contenteditable class="editable">
+      <li>Tested 2 areas across 2 products.</li>
+      <li>SMIS 2.0: 6 Failed and 3 Blocked tests. Pass rate: 33%.</li>
+      <li>Call Center Portal: 10 Failed and 4 Blocked tests. 14 bugs found.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Detailed Test Results</h2>
+    <table contenteditable>
+      <thead>
+        <tr><th>Product</th><th>Test Type</th><th>Test Case</th><th>Priority</th><th>Time</th><th>Status</th><th>Defects</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SMIS 2.0</td><td>Survey Logic</td><td>Skip to pregnancy if never given birth</td><td>High</td><td>10 min</td><td class="passed">PASS</td><td>0</td></tr>
+        <tr><td>SMIS 2.0</td><td>Survey Logic</td><td>Show childbirth questions</td><td>Medium</td><td>8 min</td><td class="passed">PASS</td><td>0</td></tr>
+        <tr><td>SMIS 2.0</td><td>Survey Logic</td><td>Skip ACT questions if ACT not selected</td><td>High</td><td>5 min</td><td class="failed">FAIL</td><td>BUG-SMIS-001</td></tr>
+        <tr><td>SMIS 2.0</td><td>Survey Logic</td><td>Show only one ACT question</td><td>High</td><td>6 min</td><td class="failed">FAIL</td><td>BUG-SMIS-002</td></tr>
+        <tr><td>SMIS 2.0</td><td>Survey Logic</td><td>Form submission blocked after ACT</td><td>High</td><td>6 min</td><td class="failed">FAIL</td><td>BUG-SMIS-003</td></tr>
+        <tr><td>Call Center Portal</td><td>UI Validation</td><td>User creation fails when input has trailing space</td><td>Medium</td><td>6 min</td><td class="failed">FAIL</td><td>BUG-CCP-013</td></tr>
+        <tr><td>Call Center Portal</td><td>User Management</td><td>Error field trimming</td><td>Medium</td><td>6 min</td><td class="failed">FAIL</td><td>BUG-CCP-012</td></tr>
+        <tr><td>Call Center Portal</td><td>User Management</td><td>Name input allows special characters</td><td>High</td><td>6 min</td><td class="failed">FAIL</td><td>BUG-CCP-011</td></tr>
+        <tr><td>Call Center Portal</td><td>User Management</td><td>Name input allows whitespace</td><td>High</td><td>6 min</td><td class="failed">FAIL</td><td>BUG-CCP-010</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Bug Reporting</h2>
+    <table contenteditable>
+      <thead>
+        <tr><th>ID</th><th>Product</th><th>Title</th><th>Priority</th><th>Status</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>BUG-SMIS-001</td><td>SMIS 2.0</td><td>ACT questions not skipped when ACT not selected</td><td>High</td><td>Open</td><td>2025-06-30</td></tr>
+        <tr><td>BUG-SMIS-002</td><td>SMIS 2.0</td><td>Only one ACT question shown when ACT selected</td><td>High</td><td>Open</td><td>2025-06-30</td></tr>
+        <tr><td>BUG-SMIS-003</td><td>SMIS 2.0</td><td>Submission fails after ACT questions</td><td>High</td><td>Open</td><td>2025-06-30</td></tr>
+        <tr><td>BUG-CCP-010</td><td>Call Center Portal</td><td>User creation allows whitespace</td><td>High</td><td>Open</td><td>2025-06-30</td></tr>
+        <tr><td>BUG-CCP-011</td><td>Call Center Portal</td><td>User creation allows special characters</td><td>High</td><td>Open</td><td>2025-06-30</td></tr>
+        <tr><td>BUG-CCP-012</td><td>Call Center Portal</td><td>User creation trims space incorrectly</td><td>Medium</td><td>Open</td><td>2025-06-30</td></tr>
+        <tr><td>BUG-CCP-013</td><td>Call Center Portal</td><td>User creation fails with trailing space</td><td>Medium</td><td>Open</td><td>2025-06-30</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>Report generated on June 30, 2025 | Contact QA team for details.</p>
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('resultsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Passed', 'Failed', 'In Progress', 'Not Executed'],
+        datasets: [{
+          data: [220, 70, 40, 56],
+          backgroundColor: ['#28a745', '#dc3545', '#ffc107', '#6c757d']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+          title: {
+            display: true,
+            text: 'Test Results Distribution'
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html> --> -->
